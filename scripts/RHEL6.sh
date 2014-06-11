@@ -92,6 +92,10 @@ build_NEP() {
      -DSITK_INT64_PIXELIDS:BOOL=OFF  # SimpleITK flag
    make -j 12 -k
    make install
+   echo "PYTHONPATH=${MYBUILD}/NAMIC-build/SimpleITK-build/Wrapping/:${MYBUILD}/NAMIC-build/NIPYPE \
+export PYTHONPATH \
+PATH=${MYBUILD}/NAMIC-build/bin:$PATH \
+export PATH" >> ${MYENV}/bin/activate
 }
 
 # MAIN
