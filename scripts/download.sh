@@ -6,14 +6,20 @@ download_file ()
     # Usage:
     #    download_file ${FILENAME} ${ADDRESS}
     #
-    if [[ ${#} -ne 2 ]]; then
+    if [[ ${#} -lt 2 ]]; then
         return ${ERR_DOWNLOAD}
     fi
     cd ${MYSOURCE}
     FILENAME=$1
     ADDRESS=$2
+    if [[ ${#} -eq 3 ]]; then
+        FLAGS=$3
+    else
+        FLAGS=""
+    fi
+
     if [[ ! -f ${FILENAME} ]]; then
-        if ! wget ${ADDRESS}; then
+        if ! wget ${FLAGS} ${ADDRESS}; then
             return ${ERR_DOWNLOAD}
         fi
     fi
@@ -37,8 +43,9 @@ download_qt ()
 download_virtualenv ()
 {
     FILENAME=virtualenv-${VENV_VERSION}.tar.gz
+    FLAGS=--no-check-certificate
     ADDRESS=https://pypi.python.org/packages/source/v/virtualenv/${FILENAME}
-    download_file ${FILENAME} ${ADDRESS}
+    download_file ${FILENAME} ${ADDRESS} ${FLAGS}
 }
 
 download_namic ()
