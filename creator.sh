@@ -15,28 +15,23 @@ if [[ ${SYSTEM} == "Darwin" ]]; then
 elif [[ ${SYSTEM} == "Linux" ]]; then
     OSTAG=$(scripts/linux.sh)
 else
-    echo "System is not one recognized by creator.sh.  Quiting"
+    echo "System is not one recognized by ${0}.  Quiting"
     exit $ERR_UNKNOWN_SYS
 fi
-# HACK
-if [[ ${OSTAG} != "RHEL6" ]]; then
-    echo "Error: OSTAG not set correctly!"
-    exit $ERR_UNKNOWN_OS
-fi
-# END HACK
 
 BASEDIR=/Shared/sinapse/sharedopt
 if [[ ! -d ${BASEDIR} ]]; then
     exit $ERR_MISSING_DIR
 fi
-export MYSOURCE=${BASEDIR}/$DATETAG/source
-export MYBUILD=${BASEDIR}/$DATETAG/$OSTAG
+
+if [[ ! ${MYSOURCE} || ${#MYSOURCE} -eq 0 ]]; then
+    export MYSOURCE=${BASEDIR}/$DATETAG/source
+fi
+if [[ ! ${MYBUILD} || ${#MYBUILD} -eq 0 ]]; then
+    export MYBUILD=${BASEDIR}/$DATETAG/$OSTAG
+fi
 
 # Application variables
-## CMake
-export CMAKE_MAJOR_MINOR=2.8
-CMAKE_BUILD_REV=12.2
-export CMAKE_VERSION=${CMAKE_MAJOR_MINOR}.${CMAKE_BUILD_REV}
 # Python
 export PYTHON_MAJOR_MINOR=2.7
 PYTHON_REV=7
