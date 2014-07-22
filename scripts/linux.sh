@@ -7,8 +7,8 @@ if [[ ${OSTAG:0:4} != "RHEL" ]]; then
     # CentOS
     if [[ $(lsb_release -d | awk '{print $2}') == 'CentOS' ]]; then
         echo "WARNING: Found CentOS" 1>&2
-        OS_VERSION=$(lsb_release -d | awk '{print substr($4, 0, 1)}')
-        OSTAG=$(echo "RHEL${OS_VERSION}")
+        VERSION_OS=$(lsb_release -d | awk '{print substr($4, 0, 1)}')
+        OSTAG=$(echo "RHEL${VERSION_OS}")
     else
         exit $ERR_UNKNOWN_OS
     fi
